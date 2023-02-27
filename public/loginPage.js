@@ -7,6 +7,6 @@ userForm.loginFormCallback = (data) => {
 }
 userForm.registerFormCallback = (data) => {
     ApiConnector.register({login: data.login, password: data.password}, response => {
-        response.success ? window.location.reload() : userForm.setLoginErrorMessage(response.error);
+        response.success ? window.location.reload() : userForm.setRegisterErrorMessage(response.error);
     });
 }
