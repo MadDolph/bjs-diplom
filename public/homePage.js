@@ -50,13 +50,42 @@ mManager.sendMoneyCallback = (data) => {
         }        
     });
 }
+function renewFavorites() {
 ApiConnector.getFavorites(response => {
-    if(response.success) {
+        if(response.success) {
         cFavorites.clearTable();
         cFavorites.fillTable(response.data);
-        cFavorites.updateUsersList();
+        mManager.updateUsersList(response.data);
+        }
+    });
+}
+
+renewFavorites();
+cFavorites.addUserCallback = (data) => {
+    if(data.id > 0) { 
+        ApiConnector.addUserToFavorites({id: data.id, name: data.name}, response => {
+            if(response.success) {
+                renewFavorites();
+                cFavorites.setMessage(response.success, "Пользователь успешно добавлен в избранное");
+            } else {
+                cFavorites.setMessage(response.success, response.error);
+            }       
+        });
+    } else {
+        cFavorites.setMessage(false, "id пользователя не может быть отрицательным");
+        renewFavorites();
     }
-});
+}
+cFavorites.removeUserCallback = (data) => {
+    ApiConnector.removeUserFromFavorites(data, response => {
+        if(response.success) {
+            renewFavorites();
+            cFavorites.setMessage(response.success, "Пользователь успешно удалён из избранного");
+        } else {
+            cFavorites.setMessage(response.success, response.error);
+        }
+    });
+}
 
 
 
