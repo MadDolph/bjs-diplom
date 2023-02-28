@@ -59,7 +59,6 @@ ApiConnector.getFavorites(response => {
         }
     });
 }
-
 renewFavorites();
 cFavorites.addUserCallback = (data) => {
     if(data.id > 0) { 
@@ -73,7 +72,6 @@ cFavorites.addUserCallback = (data) => {
         });
     } else {
         cFavorites.setMessage(false, "id пользователя не может быть отрицательным");
-        renewFavorites();
     }
 }
 cFavorites.removeUserCallback = (data) => {
